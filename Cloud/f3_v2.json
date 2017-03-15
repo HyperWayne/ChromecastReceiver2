@@ -1,0 +1,65 @@
+{
+    "categories": [
+        {
+            "name": "Movies",
+            "hls":"http://m104.nthu.edu.tw/~s104062559/SmartTV/video/",
+            "dash":"http://m104.nthu.edu.tw/~s104062559/SmartTV/video/",
+            "mp4":"http://m104.nthu.edu.tw/~s104062559/SmartTV/video/",
+            "images":"http://m104.nthu.edu.tw/~s104062559/SmartTV/video/",
+            "tracks":"http://commondatastorage.googleapis.com/gtv-videos-bucket/CastVideos/tracks/",
+            "videos": [
+                {
+                	"subtitle": "shishan",
+                	"sources":[
+                	    {
+                	    	"type": "mp4",
+                	    	"mime": "videos/mp4",
+                	    	"url": "shishan.mp4"
+                	    }
+                	],
+                	"thumb": "CSC.jpg",
+                	"image-480x270" : "CSC.jpg",
+                	"image-780x1200" : "CSC_780_1200.jpg",
+                	"title" : "[0]Shishan",
+                	"studio" : "CSCLAB",
+                	"duration" : 2849,
+                	"channel" : "0"
+                },
+                {
+                    "subtitle": "Experiment",
+                    "sources":[
+                        {
+                            "type": "mp4",
+                            "mime": "videos/mp4",
+                            "url": "SmartTV_35_2.mp4"
+                        }
+                    ],
+                    "thumb": "CSC.jpg",
+                    "image-480x270" : "CSC.jpg",
+                    "image-780x1200" : "CSC_780_1200.jpg",
+                    "title" : "[1]Experiment",
+                    "studio" : "CSCLAB",
+                    "duration" : 3671,
+                    "channel" : "1"
+                },
+                {
+                    "subtitle": "Experiment",
+                    "sources":[
+                        {
+                            "type": "mp4",
+                            "mime": "videos/mp4",
+                            "url": "SmartTV_35_back.mp4"
+                        }
+                    ],
+                    "thumb": "CSC.jpg",
+                    "image-480x270" : "CSC.jpg",
+                    "image-780x1200" : "CSC_780_1200.jpg",
+                    "title" : "[2]Experiment",
+                    "studio" : "CSCLAB",
+                    "duration" : 3671,
+                    "channel" : "2"
+                }
+            ]
+        }
+    ]
+}

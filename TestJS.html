@@ -1,0 +1,97 @@
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <title>Test JS</title>
+	    <script src="jquery-1.11.3.min.js" type="text/javascript"></script>
+	    <style>
+	    	.user{
+	    		width: 50px;
+				height: 50px;
+	    	}
+	    	.emotion{
+	    		width: 40px;
+				height: 40px;
+	    	}
+	    	.hide_bottom{
+				position:fixed;
+				bottom: -50px;
+				left: 0px;
+	    	}
+	    	.hide_left{
+				position:fixed;
+				bottom: 0px;
+				left: -50px;
+	    	}
+	    	.user_1{
+				left: 50px;
+	    	}
+	    	.user_2{
+				left: 150px;
+	    	}
+	    </style>
+	</head>
+	<body>
+
+		<button id="showProfile" onclick="showProfile(1)">1</button>
+		<button id="showProfile" onclick="showProfile(2)">2</button>
+		<button id="showEmotion" onclick="showEmotion(1, 1)">1/1</button>
+		<button id="showEmotion" onclick="showEmotion(2, 1)">2/1</button>
+		<img id="user_1" class="user hide_left" src="profile/徐珮宜(圓).png">
+		<img id="user_2" class="user hide_left" src="profile/詹易衡(圓)2.png">
+
+		<script type="text/javascript">
+			function showProfile(user){
+				switch(user) {
+					case 1:
+						$("#user_1").animate({left: '50px'}, "slow");
+						break;
+					case 2:
+						$("#user_2").animate({left: '150px'}, "slow");
+						break;
+				}
+			}
+
+			function hideProfile(){
+				$(".user").animate({bottom: '-50px'}, "slow");
+			}
+
+			function showEmotion(user, index){
+				console.log("showEmotion "+"user: "+user+" index: "+index);
+				var img = $('<img>', {"class": "hide_bottom emotion"});
+				$("body").append(img);
+				switch(user) {
+					case 1:
+						img.css("left", "45");
+						break;
+					case 2:
+						img.css("left", "150");
+						break;
+				}
+				switch(index) {
+					case 1:
+						img.attr("src", "emotion/happy.png");
+						break;
+					case 2:
+						img.attr("src", "emotion/surprise.png");
+						break;
+					case 3:
+						img.attr("src", "emotion/contempt.png");
+						break;
+					case 4:
+						img.attr("src", "emotion/fear.png");
+						break;
+					case 5:
+						img.attr("src", "emotion/sad.png");
+						break;
+					case 6:
+						img.attr("src", "emotion/disgust.png");
+						break;
+					case 7:
+						img.attr("src", "emotion/angry.png");
+						break;
+				}
+				img.animate({bottom: '100px'}, "slow");
+			}
+		</script>
+	</body>
+</html>
