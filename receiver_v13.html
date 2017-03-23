@@ -59,12 +59,12 @@
             list-style-type: none;
         }
         #status{
-          height:200px;
-          width:100%;
-          z-index: 4;
-          position:fixed;
-          bottom: 0px;
-          visibility: visible;
+            height:200px;
+            width:100%;
+            z-index: 4;
+            position:fixed;
+            bottom: 0px;
+            visibility: visible;
         }
         .user{
             width: 50px;
@@ -73,6 +73,22 @@
         .emotion{
             width: 40px;
             height: 40px;
+        }
+        .volume{
+            width: 100px;
+            height: 100px;
+            visibility: hidden;
+        }
+        .volume_value{
+            font-size: 250%;
+            color: rgb(119,206,198);
+        }
+        .center{
+            z-index: 5;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         .hide_bottom{
             position:fixed;
@@ -124,6 +140,10 @@
         <img id="user_2" class="user hide_left" src="profile/user2.png">
       </div>
     </div>
+
+    <img id="volume_down" class="center volume" src="volume/down.png">
+    <img id="volume_up" class="center volume" src="volume/up.png">
+    <div id="volume_value" class="center volume_value"></div>
 
     <script type="text/javascript">
         "use strict";
@@ -335,10 +355,6 @@
                     Presence(user_index, subpart[0], subpart[1]);
                     setLog(user_index, "presence", subpart[0]+subpart[1], video_time);
                     break;
-                case 'V':
-                    setVolume(part[3]);
-                    setLog(user_index, "set volume", part[3], video_time);
-                    break;
                 default:
                     break;
             }
@@ -385,16 +401,6 @@
             $(receiverVideoElement).autoplay = true;
         }
 
-        function setVolume(value){
-          var player = document.getElementById('receiverVideoElement');
-          displayText('value: ' + value);
-          displayText('Before: ' + player.volume);
-          //player.volume = 0
-          //player.volume = player.volume + parseFloat(value);
-          player.volume = player.volume + Number(value);
-          displayText('After: ' + player.volume);
-        }
-
         function setClip(start, end, user_index, video_time){
             $.post(
                 "Action.php",
@@ -428,6 +434,14 @@
 
         function showProfile(user_index){
             displayText("showProfile: " + user_index);
+            if(Number(user_index)%2==0){
+                $("#user_2").animate({left: '150px'}, "slow");
+                $("#user_2_focus").animate({left: '145px'}, "slow");
+            }else{
+                $("#user_1").animate({left: '50px'}, "slow");
+                $("#user_1_focus").animate({left: '45px'}, "slow");
+            }
+            /*
             switch(user_index){
                 case '1':
                     $("#user_1").animate({left: '50px'}, "slow");
@@ -438,6 +452,7 @@
                     $("#user_2_focus").animate({left: '145px'}, "slow");
                     break;
             }
+            */
         }
 
         function hideProfile(user_index){
@@ -460,8 +475,8 @@
                 case 'E':
                     setEmotion(user_index, type_index);
                     break;
-                case 'G':
-                    setGesture(user_index, type_index);
+                case 'V':
+                    setVolume(user_index, type_index);
                     break;
                 case 'F':
                     setFocus(user_index, type_index);
@@ -474,13 +489,10 @@
             displayText("setEmotion: " + user_index + " " + index);
             var img = $('<img>', {"class": "hide_bottom emotion"});
             $("#status").append(img);
-            switch(user_index){
-                case '1':
-                    img.css("left", "55px");
-                    break;
-                case '2':
-                    img.css("left", "155px");
-                    break;
+            if(Number(user_index)%2==0){
+                img.css("left", "155px");
+            }else{
+                img.css("left", "55px");
             }
             switch(index) {
                 case '1':
@@ -490,18 +502,9 @@
                     img.attr("src", "emotion/surprise.png");
                     break;
                 case '3':
-                    img.attr("src", "emotion/contempt.png");
-                    break;
-                case '4':
-                    img.attr("src", "emotion/fear.png");
-                    break;
-                case '5':
                     img.attr("src", "emotion/sad.png");
                     break;
-                case '6':
-                    img.attr("src", "emotion/disgust.png");
-                    break;
-                case '7':
+                case '4':
                     img.attr("src", "emotion/angry.png");
                     break;
             }
@@ -512,8 +515,37 @@
         }
 
         // Show the Result of Gesture Recognition
-        function setGesture(user_index, index){
-            displayText("setGesture");
+        function setVolume(user_index, index){
+          
+          $("#volume_down").css("visibility", "visible").hide();
+          $("#volume_up").css("visibility", "visible").hide();
+
+          var value = 0.1;
+          var volume = $("#volume_down");
+
+          var player = document.getElementById('receiverVideoElement');
+          //var player = $("#receiverVideoElement");
+          displayText('setVolume: ' + index);
+          switch(index){
+            case '0':
+                volume = $("#volume_down");
+                value = -0.1;
+                break;
+            case '1':
+                volume = $("#volume_up");
+                value = 0.1;
+                break;
+            default:
+                break;
+          }
+          displayText('value: ' + value);
+          displayText('Before: ' + player.volume);
+          if(!((player.volume==1&&index=='1')||(player.volume==0&&index=='0'))){
+              player.volume = Math.round((player.volume+value)*10)/10;
+          }
+          displayText('After: ' + player.volume);
+          volume.fadeIn(200).delay(100).fadeOut(700);
+          $("#volume_value").text(player.volume*10).fadeIn(100).delay(500).fadeOut(400);
         }
 
         // Show the Result of Eye Tracking
