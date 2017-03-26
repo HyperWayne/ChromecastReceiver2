@@ -53,7 +53,7 @@
             position: absolute;
             right: 0px;
             width: 800px;
-            visibility: visible;
+            visibility: hidden;
         }
         li{
             list-style-type: none;
@@ -457,6 +457,14 @@
 
         function hideProfile(user_index){
             displayText("hideProfile: " + user_index);
+            if(Number(user_index)%2==0){
+                $("#user_2").animate({left: '-50px'}, "slow");
+                $("#user_2_focus").animate({left: '-50px'}, "slow");
+            }else{
+                $("#user_1").animate({left: '-50px'}, "slow");
+                $("#user_1_focus").animate({left: '-50px'}, "slow");
+            }
+            /*
             switch(user_index){
                 case '1':
                     $("#user_1").animate({left: '-50px'}, "slow");
@@ -467,6 +475,7 @@
                     $("#user_2_focus").animate({left: '-50px'}, "slow");
                     break;
             }
+            */
         }
 
         function Presence(user_index, type, type_index){
@@ -552,6 +561,12 @@
         function setFocus(user_index, index){
             displayText("setFocus");
             var user_focus = $("#user_1_focus");
+            if(Number(user_index)%2==0){
+                user_focus = $("#user_2_focus");
+            }else{
+                user_focus = $("#user_1_focus");
+            }
+            /*
             switch(user_index){
                 case '1':
                     user_focus = $("#user_1_focus");
@@ -560,6 +575,7 @@
                     user_focus = $("#user_2_focus");
                     break;
             }
+            */
             switch(index){
                 case '0':
                     user_focus.css("background-color", "rgba(0,0,0,0.3)");
